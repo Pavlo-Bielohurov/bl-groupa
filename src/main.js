@@ -1,10 +1,14 @@
 // Імпорти запитів на бєк------------------------------------------
 
-import { getProducts, getProductById } from './requests/products';
+import { getProducts, getProductById, addProduct } from './requests/products';
 
 //Імпорти функцій
 
-import { markupCard, markupProductById } from './services/markupService';
+import {
+  markupCard,
+  markupProductById,
+  markupAddProduct,
+} from './services/markupService';
 
 // -----------------------------------Task 1---------------------------------
 getProducts().then(console.log);
@@ -12,14 +16,14 @@ const allProducts = document.querySelector('#allProducts');
 
 getProducts().then(({ data: { products } }) => {
   const markup = markupCard(products);
-  allProducts.insertAdjacentHTML('afterbegin', markup);
+  // allProducts.insertAdjacentHTML('afterbegin', markup);
 });
 
 // -----------------------------------Task 2---------------------------------
 const formSearch = document.querySelector('#singleProductForm');
 const singleProduct = document.querySelector('#singleProduct');
 
-formSearch.addEventListener('submit', handleSearch);
+// formSearch.addEventListener('submit', handleSearch);
 
 function handleSearch(evt) {
   evt.preventDefault();
@@ -30,4 +34,30 @@ function handleSearch(evt) {
     singleProduct.innerHTML = markupElement;
   });
   formSearch.reset();
+}
+
+// ----------------------Task 3 -----------------------
+
+const newProductForm = document.querySelector('#newProductForm');
+const newProductSection = document.querySelector('#newProductSection');
+
+newProductForm.addEventListener('submit', createProduct);
+
+function createProduct(event) {
+  event.preventDefault();
+  const title = event.target.elements.title.value;
+  const price = event.target.elements.price.value;
+  const description = event.target.elements.description.value;
+
+  const newProduct = {
+    title,
+    price,
+    description,
+  };
+  console.log(newProduct);
+  addProduct(newProduct).then(({ data }) => {
+    const markupNewCard = markupAddProduct(data);
+    newProductSection.innerHTML = markupNewCard;
+    newProductForm.reset();
+  });
 }

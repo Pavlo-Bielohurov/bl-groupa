@@ -32,3 +32,11 @@ export function markupProductById({
       <p>Description:${description}</p>
  </div>`;
 }
+
+export function markupAddProduct({ description, price, title }) {
+  return `
+  <h2>Brand:${title}</h2>
+      <p>Price:${price}</p>
+      <p>Description:${description}</p>
+      `;
+}

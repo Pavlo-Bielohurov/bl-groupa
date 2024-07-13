@@ -10,3 +10,9 @@ export async function getProducts() {
 export async function getProductById(id) {
   return await URL_DUMMY.get(`/products/${id}`);
 }
+
+// --------------------------------Task 3------------------------------------------------
+
+export async function addProduct(newProduct) {
+  return await URL_DUMMY.post('/products/add', newProduct);
+}
